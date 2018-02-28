@@ -1,2 +1,5 @@
 language: go
-script: go test
+script: 
+  - go get -u github.com/golang/lint/golint
+  - golint ./...
+  - go test
