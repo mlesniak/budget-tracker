@@ -28,6 +28,12 @@ func (t Transaction) Add(t2 Transaction) Transaction {
 	return tn
 }
 
+// NewTransaction creates a new transaction with the current timestamp.
+func NewTransaction(category string, amount string) Transaction {
+	d, _ := decimal.NewFromString(amount)
+	return Transaction{category, time.Now(), d}
+}
+
 func main() {
 	t1 := Transaction{"income", time.Now(), decimal.NewFromFloat(10.0)}
 	t2 := Transaction{"income", time.Now(), decimal.NewFromFloat(20.3)}
