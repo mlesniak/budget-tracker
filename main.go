@@ -7,20 +7,11 @@ import (
 	"github.com/shopspring/decimal"
 )
 
-// An Amount is the monetary value of a transaction.
-type Amount = decimal.Decimal
-
-// The Category of a transaction. Might be an empty string.
-type Category = string
-
-// A Timestamp describes the time of the occurence of the transaction.
-type Timestamp = time.Time
-
 // A Transaction describes a single income or expense.
 type Transaction struct {
-	Category  Category
-	Timestamp Timestamp
-	Amount    Amount
+	Category  string
+	Timestamp time.Time
+	Amount    decimal.Decimal
 }
 
 func (t Transaction) String() string {
