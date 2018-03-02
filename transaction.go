@@ -33,3 +33,12 @@ func NewTransaction(category string, amount string) Transaction {
 	d, _ := decimal.NewFromString(amount)
 	return Transaction{category, time.Now(), d}
 }
+
+// ComputeBalance computes the overall balance over all transactions.
+func ComputeBalance(transactions []Transaction) Transaction {
+	tn := Transaction{}
+	for _, t := range transactions {
+		tn = tn.Add(t)
+	}
+	return tn
+}
