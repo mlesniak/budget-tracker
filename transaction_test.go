@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"testing"
 )
 
@@ -34,4 +35,20 @@ func TestBalanceEmpty(t *testing.T) {
 	if b.Amount.StringFixed(2) != "0.00" {
 		t.Error(b.Amount)
 	}
+}
+
+func TestBudgetPlayground(t *testing.T) {
+	ts := Transactions{
+		NewTransaction("income", "1000.00"),
+	//	NewTransaction("expense", "-10.00")
+	}
+	fmt.Println("--- TEST DATA")
+	for _, t := range ts {
+		fmt.Println(t)
+	}
+	fmt.Println("\n--- EXECUTION")
+	tm, td := ComputeBudget(ts)
+	fmt.Println("\n--- RESULT")
+	fmt.Println("Monthly:", tm)
+	fmt.Println("Daily:  ", td)
 }
