@@ -1,6 +1,7 @@
 package main
 
 import (
+	"time"
 	"fmt"
 	"testing"
 )
@@ -38,6 +39,11 @@ func TestBalanceEmpty(t *testing.T) {
 }
 
 func TestBudgetPlayground(t *testing.T) {
+	tmpTime := GetTime
+	defer func() {GetTime = tmpTime}()
+	mockTime, _ := time.Parse("2006-01-02 15:04:05", "2018-03-01 00:00:00")
+	GetTime = func() time.Time {return mockTime}
+
 	ts := Transactions{
 		NewTransaction("income", "1000.00"),
 	//	NewTransaction("expense", "-10.00")
