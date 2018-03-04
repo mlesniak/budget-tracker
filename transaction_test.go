@@ -2,7 +2,6 @@ package main
 
 import (
 	"time"
-	"fmt"
 	"testing"
 )
 
@@ -39,22 +38,30 @@ func TestBalanceEmpty(t *testing.T) {
 }
 
 func TestBudgetPlayground(t *testing.T) {
-	tmpTime := GetTime
-	defer func() {GetTime = tmpTime}()
-	mockTime, _ := time.Parse("2006-01-02 15:04:05", "2018-03-01 00:00:00")
-	GetTime = func() time.Time {return mockTime}
+	defer restoreTime(Time)
+	mockTime("2018-03-01 00:00:00")
 
 	ts := Transactions{
 		NewTransaction("income", "1000.00"),
-	//	NewTransaction("expense", "-10.00")
 	}
-	fmt.Println("--- TEST DATA")
-	for _, t := range ts {
-		fmt.Println(t)
-	}
-	fmt.Println("\n--- EXECUTION")
+
 	tm, td := ComputeBudget(ts)
-	fmt.Println("\n--- RESULT")
-	fmt.Println("Monthly:", tm)
-	fmt.Println("Daily:  ", td)
+	if tm.Amount.StringFixed(2) != "1000.00" {
+		t.Error(td.Amount)
+	}
+	// 31 days for 1000 = 32.26 per day
+	if td.Amount.StringFixed(2) != "32.26" {
+		t.Error(td.Amount)
+	}
+}
+
+func restoreTime(oldTime func() time.Time) {
+	Time = oldTime
+}
+
+func mockTime(now string) {
+	Time = func() time.Time {
+		mockTime, _ := time.Parse("2006-01-02 15:04:05", now)
+		return mockTime
+	}
 }

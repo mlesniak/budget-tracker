@@ -13,7 +13,6 @@ var Time = func() time.Time {
 	return time.Now()
 }
 
-
 // A Transaction describes a single income or expense.
 type Transaction struct {
 	Category  string
@@ -53,28 +52,34 @@ func ComputeBalance(transactions Transactions) Transaction {
 	return tn
 }
 
-
 // ComputeBudget computes the remaining budget for the whole month and per day.
 //
 // The returned tuple contains (month, day) budget.
-func ComputeBudget(transactions Transactions) (Transaction, Transaction)  {
+func ComputeBudget(transactions Transactions) (Transaction, Transaction) {
 	// Determine overall balance
-	monthlyBudget := ComputeBalance(transactions)
+	balance := ComputeBalance(transactions)
 
+	remainingDays := getRemainingDays()
+	dailyBudget := Transaction{"", Time(), computeDailyBudget(balance, remainingDays)}
+
+	return balance, dailyBudget
+}
+
+// getRemainingDays computes the number of remaining days in the current month.
+func getRemainingDays() int {
 	// Ignore leap years for now.
-	days := []int{31,28,31,30,31,30,31,31,30,31,30,31}
 	now := Time()
+	days := []int{31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}
 	year, month, day := now.Date()
 	location := now.Location()
-
 	_, _, today := time.Date(year, month, day, 0, 0, 0, 0, location).Date()
-	lastDay := days[month - 1]
+	lastDay := days[month-1]
 	remainingDays := lastDay - today + 1
+	return remainingDays
+}
 
-	daysDecimal := decimal.NewFromFloat(float64(remainingDays))
-	dailyAmount := monthlyBudget.Amount.Div(daysDecimal)
-
-	dailyBudget := Transaction{"", Time(), dailyAmount}
-
-	return monthlyBudget, dailyBudget
+func computeDailyBudget(balance Transaction, days int) decimal.Decimal {
+	daysDecimal := decimal.NewFromFloat(float64(days))
+	dailyAmount := balance.Amount.Div(daysDecimal)
+	return dailyAmount
 }
