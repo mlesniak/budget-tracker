@@ -7,12 +7,6 @@ import (
 	"github.com/shopspring/decimal"
 )
 
-// Time is a function which returns the "current" time. Its value is temporarily overwritten
-// in unit tests to return a pre-defined time.
-var Time = func() time.Time {
-	return time.Now()
-}
-
 // A Transaction describes a single income or expense.
 type Transaction struct {
 	Category  string

@@ -1,7 +1,6 @@
 package main
 
 import (
-	"time"
 	"testing"
 )
 
@@ -38,8 +37,8 @@ func TestBalanceEmpty(t *testing.T) {
 }
 
 func TestBudgetPlayground(t *testing.T) {
-	defer restoreTime(Time)
-	mockTime("2018-03-01 00:00:00")
+	defer RestoreTime(Time)
+	MockTime("2018-03-01 00:00:00")
 
 	ts := Transactions{
 		NewTransaction("income", "1000.00"),
@@ -52,16 +51,5 @@ func TestBudgetPlayground(t *testing.T) {
 	// 31 days for 1000 = 32.26 per day
 	if td.Amount.StringFixed(2) != "32.26" {
 		t.Error(td.Amount)
-	}
-}
-
-func restoreTime(oldTime func() time.Time) {
-	Time = oldTime
-}
-
-func mockTime(now string) {
-	Time = func() time.Time {
-		mockTime, _ := time.Parse("2006-01-02 15:04:05", now)
-		return mockTime
 	}
 }
