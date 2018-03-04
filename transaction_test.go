@@ -11,8 +11,8 @@ func TestBalanceBasic(t *testing.T) {
 	d := append(ta, t1, t2)
 
 	b := ComputeBalance(d)
-	if b.Amount.StringFixed(2) != "-33.33" {
-		t.Error(b.Amount)
+	if b.StringFixed(2) != "-33.33" {
+		t.Error(b)
 	}
 }
 
@@ -23,16 +23,16 @@ func TestBalanceZero(t *testing.T) {
 	d := append(ta, t1, t2)
 
 	b := ComputeBalance(d)
-	if b.Amount.StringFixed(2) != "0.00" {
-		t.Error(b.Amount)
+	if b.StringFixed(2) != "0.00" {
+		t.Error(b)
 	}
 }
 
 func TestBalanceEmpty(t *testing.T) {
 	ta := make([]Transaction, 2)
 	b := ComputeBalance(ta)
-	if b.Amount.StringFixed(2) != "0.00" {
-		t.Error(b.Amount)
+	if b.StringFixed(2) != "0.00" {
+		t.Error(b)
 	}
 }
 
@@ -45,11 +45,11 @@ func TestBudgetPlayground(t *testing.T) {
 	}
 
 	tm, td := ComputeBudget(ts)
-	if tm.Amount.StringFixed(2) != "1000.00" {
-		t.Error(td.Amount)
+	if tm.StringFixed(2) != "1000.00" {
+		t.Error(td)
 	}
 	// 31 days for 1000 = 32.26 per day
-	if td.Amount.StringFixed(2) != "32.26" {
-		t.Error(td.Amount)
+	if td.StringFixed(2) != "32.26" {
+		t.Error(td)
 	}
 }

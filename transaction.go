@@ -11,8 +11,11 @@ import (
 type Transaction struct {
 	Category  string
 	Timestamp time.Time
-	Amount    decimal.Decimal
+	Amount    Amount
 }
+
+// An Amount describes a monetary value.
+type Amount = decimal.Decimal
 
 // Transactions encapsulate a list of single transactions.
 type Transactions = []Transaction
@@ -22,15 +25,6 @@ func (t Transaction) String() string {
 		t.Timestamp.Format("2006-01-02 15:04:05"), t.Category, t.Amount)
 }
 
-// Add two Transaction together.
-// Note that the category is empty after that.
-func (t Transaction) Add(t2 Transaction) Transaction {
-	tn := Transaction{}
-	tn.Timestamp = Time()
-	tn.Amount = t.Amount.Add(t2.Amount)
-	return tn
-}
-
 // NewTransaction creates a new transaction with the current timestamp.
 func NewTransaction(category string, amount string) Transaction {
 	d, _ := decimal.NewFromString(amount)
@@ -38,24 +32,21 @@ func NewTransaction(category string, amount string) Transaction {
 }
 
 // ComputeBalance computes the overall balance over all transactions.
-func ComputeBalance(transactions Transactions) Transaction {
-	tn := Transaction{}
+func ComputeBalance(transactions Transactions) Amount {
+	amount := decimal.NewFromFloat(0)
 	for _, t := range transactions {
-		tn = tn.Add(t)
+		amount = amount.Add(t.Amount)
 	}
-	return tn
+	return amount
 }
 
 // ComputeBudget computes the remaining budget for the whole month and per day.
 //
 // The returned tuple contains (month, day) budget.
-func ComputeBudget(transactions Transactions) (Transaction, Transaction) {
-	// Determine overall balance
+func ComputeBudget(transactions Transactions) (Amount, Amount) {
 	balance := ComputeBalance(transactions)
-
 	remainingDays := getRemainingDays()
-	dailyBudget := Transaction{"", Time(), computeDailyBudget(balance, remainingDays)}
-
+	dailyBudget := computeDailyBudget(balance, remainingDays)
 	return balance, dailyBudget
 }
 
@@ -72,8 +63,8 @@ func getRemainingDays() int {
 	return remainingDays
 }
 
-func computeDailyBudget(balance Transaction, days int) decimal.Decimal {
+func computeDailyBudget(balance Amount, days int) Amount {
 	daysDecimal := decimal.NewFromFloat(float64(days))
-	dailyAmount := balance.Amount.Div(daysDecimal)
+	dailyAmount := balance.Div(daysDecimal)
 	return dailyAmount
 }
