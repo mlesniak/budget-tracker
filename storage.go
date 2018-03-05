@@ -14,8 +14,9 @@ import (
 var database *sql.DB
 
 // Currently, we only support a single user.
-const userId = 1
+const userID = 1
 
+// InitalizeStorage creates the database and creates non-existing tables.
 func InitalizeStorage() {
 	database, _ = sql.Open("sqlite3", "./demo.db")
 	executeFile("init.sql")
@@ -50,26 +51,12 @@ func Save(t Transaction) {
 			"VALUES (?,?,?,?,?,?)")
 	amount, _ := t.Amount.Float64()
 	year, month, _ := t.Timestamp.Date()
-	statement.Exec(userId, year, month, t.Timestamp, t.Category, amount)
+	statement.Exec(userID, year, month, t.Timestamp, t.Category, amount)
 }
 
 func Load(year, month int) Transactions {
+	// TODO ML Implement me :-)
+
 	fmt.Println("Loading for", year, month)
 	return Transactions{}
 }
-
-// func fill(database *sql.DB) {
-// 	statement, _ := database.Prepare("INSERT INTO storage (key, value) VALUES (?, ?)")
-// 	statement.Exec("timestamp", time.Now())
-// }
-
-// func query(database *sql.DB) {
-// 	rows, _ := database.Query("SELECT id, key, value FROM storage")
-// 	var id int
-// 	var key string
-// 	var value string
-// 	for rows.Next() {
-// 		rows.Scan(&id, &key, &value)
-// 		log.Println(strconv.Itoa(id) + ":" + key + ":" + value)
-// 	}
-// }
