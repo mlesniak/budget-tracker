@@ -5,4 +5,7 @@ import (
 )
 
 func main() {
+	InitalizeStorage()
+
+	// Later, we will call the HTTP handler here...
 }
