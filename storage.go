@@ -14,15 +14,14 @@ import (
 
 var database *sql.DB
 
-// DatabaseFileName is the filename of the database. This value is overwritten in unit-tests.
-var DatabaseFileName = "data.db"
-
 // Currently, we only support a single user.
 const userID = 1
 
 // InitalizeStorage creates the database and creates non-existing tables.
-func InitalizeStorage() {
-	database, _ = sql.Open("sqlite3", DatabaseFileName)
+//
+// Uses fileName to define the database main file
+func InitalizeStorage(fileName string) {
+	database, _ = sql.Open("sqlite3", fileName)
 	executeFile("init.sql")
 }
 

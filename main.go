@@ -9,8 +9,12 @@ import (
 
 func main() {
 	// Later, we will call the HTTP handler here, too...
-	InitalizeStorage()
+	InitalizeStorage("./data.db")
+	
+	demo()
+}
 
+func demo() {
 	rand.Seed(time.Now().UTC().UnixNano())
 	amount := rand.Float64() * 100
 	t := NewTransaction("demo", strconv.FormatFloat(amount, 'g', 2, 32))
