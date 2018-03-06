@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"strings"
+	"time"
 
 	// This is the usual way to include an SQL driver in golang. Actually we are not using
 	// any imports from the package explictly.
@@ -54,9 +55,24 @@ func Save(t Transaction) {
 	statement.Exec(userID, year, month, t.Timestamp, t.Category, amount)
 }
 
+// Load all transactions for a given year and month.
+//
+// Note that currently solely the default user is chosen.
 func Load(year, month int) Transactions {
-	// TODO ML Implement me :-)
+	ts := make(Transactions, 0, 16)
 
-	fmt.Println("Loading for", year, month)
-	return Transactions{}
+	rows, _ := database.Query(
+		"SELECT timestamp, category, amount FROM transactions WHERE "+
+			"userid = ? AND year = ? AND month = ?", userID, year, month)
+
+	for rows.Next() {
+		var timestamp time.Time
+		var category string
+		var amount Amount
+		rows.Scan(&timestamp, &category, &amount)
+		t := Transaction{category, timestamp, amount}
+		ts = append(ts, t)
+	}
+
+	return ts
 }
