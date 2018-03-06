@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/mlesniak/budget-tracker.svg?branch=master)](https://travis-ci.org/mlesniak/budget-tracker)
+[![Go Report Card](https://goreportcard.com/badge/github.com/mlesniak/budget-tracker)](https://goreportcard.com/report/github.com/mlesniak/budget-tracker)
 
 # Overview
 
