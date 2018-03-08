@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"log"
 	"math/rand"
 	"time"
 	"strconv"
@@ -15,6 +15,7 @@ func main() {
 }
 
 func demo() {
+	log.Println("Starting demo")
 	rand.Seed(time.Now().UTC().UnixNano())
 	amount := rand.Float64() * 100
 	t := NewTransaction("demo", strconv.FormatFloat(amount, 'g', 2, 32))
@@ -22,6 +23,6 @@ func demo() {
 
 	ts := Load(2018, 3)
 	for _, t := range ts {
-		fmt.Println(t)
+		log.Println("Load", t)
 	}
 }
