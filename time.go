@@ -2,6 +2,7 @@ package main
 
 import (
 	"time"
+	"log"
 )
 
 // Time is a function which returns the "current" time. Its value is temporarily overwritten
@@ -16,6 +17,7 @@ var Time = func() time.Time {
 //
 //     defer RestoreTime(Time)
 func RestoreTime(oldTime func() time.Time) {
+	log.Println("Restoring time")
 	Time = oldTime
 }
 
@@ -25,6 +27,7 @@ func RestoreTime(oldTime func() time.Time) {
 //
 //     MockTime("2018-03-01 00:00:00")
 func MockTime(now string) {
+	log.Println("Mocking time to", now)
 	Time = func() time.Time {
 		mockTime, _ := time.Parse("2006-01-02 15:04:05", now)
 		return mockTime
