@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"time"
 
 	"github.com/shopspring/decimal"
@@ -27,6 +28,7 @@ func (t Transaction) String() string {
 
 // NewTransaction creates a new transaction with the current timestamp.
 func NewTransaction(category string, amount string) Transaction {
+	log.Println("New transaction", category, amount)
 	d, _ := decimal.NewFromString(amount)
 	return Transaction{category, Time(), d}
 }
