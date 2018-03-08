@@ -2,10 +2,10 @@ package main
 
 import (
 	"database/sql"
-	"fmt"
 	"io/ioutil"
 	"strings"
 	"time"
+	"log"
 
 	// This is the usual way to include an SQL driver in golang. Actually we are not using
 	// any imports from the package explictly.
@@ -21,6 +21,7 @@ const userID = 1
 //
 // Uses fileName to define the database main file
 func InitalizeStorage(fileName string) {
+	log.Println("Opening database", fileName)
 	database, _ = sql.Open("sqlite3", fileName)
 	executeFile("init.sql")
 }
@@ -28,9 +29,9 @@ func InitalizeStorage(fileName string) {
 func executeFile(fileName string) {
 	bytes, err := ioutil.ReadFile(fileName)
 	if err != nil {
-		fmt.Println("No initialization file found.")
-		return
+		log.Fatal("No initialization file found:", fileName)
 	}
+	log.Println("Executing init script", fileName)
 
 	cmds := strings.Split(string(bytes), ";")
 	for _, cmd := range cmds {
@@ -40,8 +41,7 @@ func executeFile(fileName string) {
 		}
 		statement, err := database.Prepare(cmd)
 		if err != nil {
-			fmt.Println("Unable to execute statement: ", cmd)
-			return
+			log.Fatal("Unable to execute statement:", cmd)
 		}
 		statement.Exec()
 	}
@@ -54,6 +54,7 @@ func Save(t Transaction) {
 			"VALUES (?,?,?,?,?,?)")
 	amount, _ := t.Amount.Float64()
 	year, month, _ := t.Timestamp.Date()
+	log.Println("Saving transaction", t)
 	statement.Exec(userID, year, month, t.Timestamp, t.Category, amount)
 }
 
@@ -63,6 +64,7 @@ func Save(t Transaction) {
 func Load(year, month int) Transactions {
 	ts := make(Transactions, 0, 16)
 
+	log.Println("Loading transactions for year=", year, "month=", month)
 	rows, _ := database.Query(
 		"SELECT timestamp, category, amount FROM transactions WHERE "+
 			"userid = ? AND year = ? AND month = ? ORDER BY timestamp ASC", userID, year, month)
