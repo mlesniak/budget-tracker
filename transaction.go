@@ -29,7 +29,10 @@ func (t Transaction) String() string {
 // NewTransaction creates a new transaction with the current timestamp.
 func NewTransaction(category string, amount string) Transaction {
 	log.Println("New transaction", category, amount)
-	d, _ := decimal.NewFromString(amount)
+	d, err := decimal.NewFromString(amount)
+	if err != nil {
+		log.Fatal("Unable to parse amount as decimal", err)
+	}
 	return Transaction{category, Time(), d}
 }
 

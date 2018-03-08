@@ -29,7 +29,10 @@ func RestoreTime(oldTime func() time.Time) {
 func MockTime(now string) {
 	log.Println("Mocking time to", now)
 	Time = func() time.Time {
-		mockTime, _ := time.Parse("2006-01-02 15:04:05", now)
+		mockTime, err := time.Parse("2006-01-02 15:04:05", now)
+		if err != nil {
+			log.Fatal("Unable to parse time", err)
+		}
 		return mockTime
 	}
 }

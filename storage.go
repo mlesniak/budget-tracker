@@ -3,9 +3,9 @@ package main
 import (
 	"database/sql"
 	"io/ioutil"
+	"log"
 	"strings"
 	"time"
-	"log"
 
 	// This is the usual way to include an SQL driver in golang. Actually we are not using
 	// any imports from the package explictly.
@@ -22,7 +22,11 @@ const userID = 1
 // Uses fileName to define the database main file
 func InitalizeStorage(fileName string) {
 	log.Println("Opening database", fileName)
-	database, _ = sql.Open("sqlite3", fileName)
+	var err error
+	database, err = sql.Open("sqlite3", fileName)
+	if err != nil {
+		log.Fatal("Unable to open database", err)
+	}
 	executeFile("init.sql")
 }
 
@@ -49,9 +53,12 @@ func executeFile(fileName string) {
 
 // Save a new transaction.
 func Save(t Transaction) {
-	statement, _ := database.Prepare(
+	statement, err := database.Prepare(
 		"INSERT INTO transactions (userid, year, month, timestamp, category, amount)" +
 			"VALUES (?,?,?,?,?,?)")
+	if err != nil {
+		log.Fatal("Invalid insert query", err)
+	}
 	amount, _ := t.Amount.Float64()
 	year, month, _ := t.Timestamp.Date()
 	log.Println("Saving transaction", t)
@@ -65,10 +72,12 @@ func Load(year, month int) Transactions {
 	ts := make(Transactions, 0, 16)
 
 	log.Println("Loading transactions for year=", year, "month=", month)
-	rows, _ := database.Query(
+	rows, err := database.Query(
 		"SELECT timestamp, category, amount FROM transactions WHERE "+
 			"userid = ? AND year = ? AND month = ? ORDER BY timestamp ASC", userID, year, month)
-
+	if err != nil {
+		log.Fatal("Unable to execute query", err)
+	}
 	for rows.Next() {
 		var timestamp time.Time
 		var category string
