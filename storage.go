@@ -65,7 +65,7 @@ func Load(year, month int) Transactions {
 
 	rows, _ := database.Query(
 		"SELECT timestamp, category, amount FROM transactions WHERE "+
-			"userid = ? AND year = ? AND month = ?", userID, year, month)
+			"userid = ? AND year = ? AND month = ? ORDER BY timestamp ASC", userID, year, month)
 
 	for rows.Next() {
 		var timestamp time.Time
