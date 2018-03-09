@@ -2,27 +2,25 @@ package main
 
 import (
 	"log"
-	"math/rand"
-	"time"
-	"strconv"
+
+	"net/http"
+	"github.com/gorilla/mux"
 )
 
 func main() {
-	// Later, we will call the HTTP handler here, too...
 	InitalizeStorage("./data.db")
-	
-	demo()
+	startServer()
 }
 
-func demo() {
-	log.Println("Starting demo")
-	rand.Seed(time.Now().UTC().UnixNano())
-	amount := rand.Float64() * 100
-	t := NewTransaction("demo", strconv.FormatFloat(amount, 'g', 2, 32))
-	Save(t)
+func startServer() {
+	r := mux.NewRouter()
+    r.HandleFunc("/", homeHandler)
+	port := ":8080"
+	log.Println("Starting to listen on port", port)
+	http.ListenAndServe(port, r)
+}
 
-	ts := Load(2018, 3)
-	for _, t := range ts {
-		log.Println("Load", t)
-	}
+func homeHandler(rw http.ResponseWriter,req  *http.Request) {
+	bs := []byte("Hello, world")
+	rw.Write(bs)
 }
