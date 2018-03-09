@@ -38,6 +38,7 @@ func transactionHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	
+	w.Header()["Content-Type"] = []string{"application/json"}
 	ts := Load(year, month)
 	enc := json.NewEncoder(w)
 	enc.Encode(ts)
