@@ -4,6 +4,7 @@ import (
 	"log"
 	"strconv"
 	"net/http"
+	"encoding/json"
 
 	"github.com/gorilla/mux"
 )
@@ -23,7 +24,7 @@ func startServer() {
 
 func transactionHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	log.Println("Transaction handler: ", vars)
+	log.Println("Transaction handler called. vars=", vars)
 	year, err := strconv.Atoi(vars["year"])
 	if err != nil {
 		log.Println("Unable to parse year", err)
@@ -38,7 +39,6 @@ func transactionHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	
 	ts := Load(year, month)
-	log.Println(ts)
-	bs := []byte("ok")
-	w.Write(bs)
+	enc := json.NewEncoder(w)
+	enc.Encode(ts)
 }
