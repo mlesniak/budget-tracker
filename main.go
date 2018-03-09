@@ -2,8 +2,9 @@ package main
 
 import (
 	"log"
-
+	"strconv"
 	"net/http"
+
 	"github.com/gorilla/mux"
 )
 
@@ -14,13 +15,30 @@ func main() {
 
 func startServer() {
 	r := mux.NewRouter()
-    r.HandleFunc("/", homeHandler)
+	r.HandleFunc("/api/transaction/{year}/{month}", transactionHandler)
 	port := ":8080"
 	log.Println("Starting to listen on port", port)
 	http.ListenAndServe(port, r)
 }
 
-func homeHandler(rw http.ResponseWriter,req  *http.Request) {
-	bs := []byte("Hello, world")
-	rw.Write(bs)
+func transactionHandler(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	log.Println("Transaction handler: ", vars)
+	year, err := strconv.Atoi(vars["year"])
+	if err != nil {
+		log.Println("Unable to parse year", err)
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	month, err := strconv.Atoi(vars["month"])
+	if err != nil {
+		log.Println("Unable to parse month", err)
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	
+	ts := Load(year, month)
+	log.Println(ts)
+	bs := []byte("ok")
+	w.Write(bs)
 }
