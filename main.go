@@ -27,18 +27,9 @@ func startServer() {
 
 // TODO ML Add generalizations?
 func listHandler(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
-	log.Println("List transactions handler called. vars=", vars)
-	year, err := strconv.Atoi(vars["year"])
+	log.Println("List transactions handler called. vars=", mux.Vars(r))
+	year, month, err := parseStandardFields(w, r)
 	if err != nil {
-		log.Println("Unable to parse year", err)
-		w.WriteHeader(http.StatusBadRequest)
-		return
-	}
-	month, err := strconv.Atoi(vars["month"])
-	if err != nil {
-		log.Println("Unable to parse month", err)
-		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 
@@ -48,19 +39,28 @@ func listHandler(w http.ResponseWriter, r *http.Request) {
 	enc.Encode(ts)
 }
 
-func budgetHandler(w http.ResponseWriter, r *http.Request) {
+func parseStandardFields(w http.ResponseWriter, r *http.Request) (int, int, error) {
 	vars := mux.Vars(r)
-	log.Println("Budget transactions handler called. vars=", vars)
 	year, err := strconv.Atoi(vars["year"])
 	if err != nil {
 		log.Println("Unable to parse year", err)
 		w.WriteHeader(http.StatusBadRequest)
-		return
+		return 0, 0, err
 	}
 	month, err := strconv.Atoi(vars["month"])
 	if err != nil {
 		log.Println("Unable to parse month", err)
 		w.WriteHeader(http.StatusBadRequest)
+		return 0, 0, err
+	}
+
+	return year, month, nil
+}
+
+func budgetHandler(w http.ResponseWriter, r *http.Request) {
+	log.Println("Budget transactions handler called. vars=", mux.Vars(r))
+	year, month, err := parseStandardFields(w, r)
+	if err != nil {
 		return
 	}
 
