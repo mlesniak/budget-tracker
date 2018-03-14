@@ -10,9 +10,9 @@ import (
 
 // A Transaction describes a single income or expense.
 type Transaction struct {
-	Category  string
-	Timestamp time.Time
-	Amount    Amount
+	Category  string    `json:"category"`
+	Timestamp time.Time `json:"timestamp"`
+	Amount    Amount    `json:"amount"`
 }
 
 // An Amount describes a monetary value.
