@@ -16,6 +16,8 @@ func StartServer() {
 	r.HandleFunc("/api/transaction/{year}/{month}/budget", budgetHandler)
 	r.HandleFunc("/api/transaction", postHandler).
 		Methods("POST")
+	// TODO ML Use gobindata later to pack all files
+	r.PathPrefix("/").Handler(http.FileServer(http.Dir("./static/")))
 	port := ":8080"
 	log.Println("Starting to listen on port", port)
 	http.ListenAndServe(port, r)
