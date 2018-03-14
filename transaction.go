@@ -15,6 +15,13 @@ type Transaction struct {
 	Amount    Amount    `json:"amount"`
 }
 
+// A Budget describes the budget for a given month.
+type Budget struct {
+	Balance       Amount `json:"balance"`
+	Daily         Amount `json:"daily"`
+	RemainingDays int    `json:"remainingDays"`
+}
+
 // An Amount describes a monetary value.
 type Amount = decimal.Decimal
 
@@ -48,11 +55,11 @@ func ComputeBalance(transactions Transactions) Amount {
 // ComputeBudget computes the remaining budget for the whole month and per day.
 //
 // The returned tuple contains (month, day) budget.
-func ComputeBudget(transactions Transactions) (Amount, Amount) {
+func ComputeBudget(transactions Transactions) Budget {
 	balance := ComputeBalance(transactions)
 	remainingDays := getRemainingDays()
 	dailyBudget := computeDailyBudget(balance, remainingDays)
-	return balance, dailyBudget
+	return Budget{balance, dailyBudget, remainingDays}
 }
 
 // getRemainingDays computes the number of remaining days in the current month.

@@ -44,12 +44,12 @@ func TestBudgetPlayground(t *testing.T) {
 		NewTransaction("income", "1000.00"),
 	}
 
-	tm, td := ComputeBudget(ts)
-	if tm.StringFixed(2) != "1000.00" {
-		t.Error(td)
+	budget := ComputeBudget(ts)
+	if budget.Balance.StringFixed(2) != "1000.00" {
+		t.Error(budget.Balance)
 	}
 	// 31 days for 1000 = 32.26 per day
-	if td.StringFixed(2) != "32.26" {
-		t.Error(td)
+	if budget.Daily.StringFixed(2) != "32.26" {
+		t.Error(budget.Daily)
 	}
 }
