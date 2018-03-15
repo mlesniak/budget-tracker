@@ -31,7 +31,7 @@ var app = new Vue({
             axios.post('/api/transaction', {
                 category: this.category,
                 amount: this.amount
-            }).then(function(response) {
+            }).then(function (response) {
                 self.fetchBudget();
             });
         },
@@ -41,7 +41,7 @@ var app = new Vue({
             axios.post('/api/transaction', {
                 category: this.category,
                 amount: "-" + this.amount
-            }).then(function(response) {
+            }).then(function (response) {
                 self.fetchBudget();
             });
         }
