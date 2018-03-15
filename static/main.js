@@ -22,7 +22,6 @@ var app = new Vue({
 
         fetchBudget() {
             axios.get('/api/transaction/2018/3/budget').then(response => {
-                console.log("Fetching Budget");
                 this.budget = response.data;
             });
         },
