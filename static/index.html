@@ -2,15 +2,23 @@
 
 <body>
     <div id="app">
+        <h1>List of transactions</h1>
         <ul>
             <li v-for="t in transactions">
                 {{t.category}} {{t.amount}}
             </li>
         </ul>
-        
+        <h1>Budget</h1>
+        <ul>
+            <li>Balance: {{budget.balance}}</li>
+            <li>Daily budget: {{budget.daily}}</li>
+            <li>Remaining days: {{budget.remainingDays}}</li>
+        </ul>
     </div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js">
-</script><script src="/main.js"></script>
+</script>
+<script src="/main.js"></script>
+
 </html>

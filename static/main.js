@@ -1,17 +1,24 @@
 var app = new Vue({
     el: '#app',
     data: {
-        transactions: []
+        transactions: [],
+        budget: {}
     },
     created() {
-        this.fetchData();
+        this.fetchTransactions();
+        this.fetchBudget();
     },
 
     methods: {
-        fetchData() {
+        fetchTransactions() {
             axios.get('/api/transaction/2018/3').then(response => {
-                console.log(response.data)
                 this.transactions = response.data;
+            });
+        },
+
+        fetchBudget() {
+            axios.get('/api/transaction/2018/3/budget').then(response => {
+                this.budget = response.data;
             });
         }
     }
