@@ -14,6 +14,14 @@
             <li>Daily budget: {{budget.daily}}</li>
             <li>Remaining days: {{budget.remainingDays}}</li>
         </ul>
+        <h1>Input</h1>
+        <form  v-on:submit.prevent="">
+            Category
+            <input v-model="category"> <br/>
+            <input v-on:click="add()" type="submit" value="+"> Amount
+            <input v-model="amount" placeholder="0.00">
+            <input v-on:click="sub()" type="submit" value="-">
+        </form>
     </div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>

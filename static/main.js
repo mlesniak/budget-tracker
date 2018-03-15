@@ -2,7 +2,11 @@ var app = new Vue({
     el: '#app',
     data: {
         transactions: [],
-        budget: {}
+        budget: {},
+
+        // For entering a new transaction.
+        amount: "",
+        category: ""
     },
     created() {
         this.fetchTransactions();
@@ -18,7 +22,28 @@ var app = new Vue({
 
         fetchBudget() {
             axios.get('/api/transaction/2018/3/budget').then(response => {
+                console.log("Fetching Budget");
                 this.budget = response.data;
+            });
+        },
+
+        add() {
+            var self = this;
+            axios.post('/api/transaction', {
+                category: this.category,
+                amount: this.amount
+            }).then(function(response) {
+                self.fetchBudget();
+            });
+        },
+
+        sub() {
+            var self = this;
+            axios.post('/api/transaction', {
+                category: this.category,
+                amount: "-" + this.amount
+            }).then(function(response) {
+                self.fetchBudget();
             });
         }
     }
