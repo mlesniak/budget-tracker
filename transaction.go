@@ -56,9 +56,9 @@ func ComputeBalance(transactions Transactions) Amount {
 //
 // The returned tuple contains (month, day) budget.
 func ComputeBudget(transactions Transactions) Budget {
-	balance := ComputeBalance(transactions)
+	balance := ComputeBalance(transactions).Round(2)
 	remainingDays := getRemainingDays()
-	dailyBudget := computeDailyBudget(balance, remainingDays)
+	dailyBudget := computeDailyBudget(balance, remainingDays).Round(2)
 	return Budget{balance, dailyBudget, remainingDays}
 }
 
