@@ -4,23 +4,62 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"os"
 	"strconv"
+	"strings"
 
 	"github.com/gorilla/mux"
 )
 
 // StartServer starts the HTTP server and configures all necessary routes.
 func StartServer() {
+	// TODO ML Refactor into multiple files / restructure this file.
 	r := mux.NewRouter()
 	r.HandleFunc("/api/transaction/{year}/{month}", listHandler)
 	r.HandleFunc("/api/transaction/{year}/{month}/budget", budgetHandler)
 	r.HandleFunc("/api/transaction", postHandler).
 		Methods("POST")
-	// TODO ML Use gobindata later to pack all files
-	r.PathPrefix("/").Handler(http.FileServer(http.Dir("./static/")))
+	r.PathPrefix("/").HandlerFunc(fileHandler)
 	port := ":8080"
 	log.Println("Starting to listen on port", port)
 	http.ListenAndServe(port, r)
+}
+
+func fileHandler(w http.ResponseWriter, r *http.Request) {
+	_, err := os.Stat("static/")
+	localMode := true
+	if err != nil {
+		localMode = false
+	}
+
+	log.Println("localMode", localMode)
+	if localMode {
+		f := http.FileServer(http.Dir("./static/"))
+		f.ServeHTTP(w, r)
+		return
+	}
+
+	for _, n := range AssetNames() {
+		log.Println("Asset:", n)
+	}
+
+	// Serving from files in go-bindata only.
+	upath := r.URL.Path
+	if !strings.HasPrefix(upath, "/") {
+		upath = "/" + upath
+		r.URL.Path = upath
+	}
+	if upath == "/" {
+		upath = "/index.html"
+	}
+	bytes, err := Asset("static" + upath)
+	if err != nil {
+		log.Println("File not found", upath)
+		w.WriteHeader(http.StatusNotFound)
+		return
+	}
+
+	w.Write(bytes)
 }
 
 func listHandler(w http.ResponseWriter, r *http.Request) {
