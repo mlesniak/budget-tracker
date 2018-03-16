@@ -1,0 +1,3 @@
+all:
+	go-bindata static/
+	go build ./...
