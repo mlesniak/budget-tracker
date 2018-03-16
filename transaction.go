@@ -10,9 +10,9 @@ import (
 
 // A Transaction describes a single income or expense.
 type Transaction struct {
-	Category  string    `json:"category"`
-	Timestamp time.Time `json:"timestamp"`
-	Amount    Amount    `json:"amount"`
+	Description string    `json:"description"`
+	Timestamp   time.Time `json:"timestamp"`
+	Amount      Amount    `json:"amount"`
 }
 
 // A Budget describes the budget for a given month.
@@ -30,17 +30,17 @@ type Transactions = []Transaction
 
 func (t Transaction) String() string {
 	return fmt.Sprintf("(%v) %-10v %v",
-		t.Timestamp.Format("2006-01-02 15:04:05"), t.Category, t.Amount)
+		t.Timestamp.Format("2006-01-02 15:04:05"), t.Description, t.Amount)
 }
 
 // NewTransaction creates a new transaction with the current timestamp.
-func NewTransaction(category string, amount string) Transaction {
-	log.Println("New transaction", category, amount)
+func NewTransaction(description string, amount string) Transaction {
+	log.Println("New transaction", description, amount)
 	d, err := decimal.NewFromString(amount)
 	if err != nil {
 		log.Fatal("Unable to parse amount as decimal", err)
 	}
-	return Transaction{category, Time(), d}
+	return Transaction{description, Time(), d}
 }
 
 // ComputeBalance computes the overall balance over all transactions.

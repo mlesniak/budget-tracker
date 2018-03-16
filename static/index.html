@@ -15,8 +15,8 @@
 
         <h1>Input</h1>
         <form v-on:submit.prevent="">
-            Category
-            <input v-model="category">
+            Description
+            <input v-model="description">
             <br/>
             <input v-on:click="add()" type="submit" value="+"> Amount
             <input v-model="amount" placeholder="0.00">
@@ -26,14 +26,14 @@
         <h1>List of transactions</h1>
         <ul v-cloak>
             <li v-for="t in transactions">
-                {{t.category}} {{t.amount}}
+                {{t.description}} {{t.amount}}
             </li>
         </ul>
     </div>
 </body>
+
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-<script src="https://unpkg.com/axios/dist/axios.min.js">
-</script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="/main.js"></script>
 
 </html>

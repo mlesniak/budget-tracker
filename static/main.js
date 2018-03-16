@@ -6,7 +6,7 @@ var app = new Vue({
 
         // For entering a new transaction.
         amount: "",
-        category: ""
+        description: ""
     },
     created() {
         this.fetchTransactions();
@@ -29,7 +29,7 @@ var app = new Vue({
         add() {
             var self = this;
             axios.post('/api/transaction', {
-                category: this.category,
+                description: this.description,
                 amount: this.amount
             }).then(function (response) {
                 self.fetchBudget();
@@ -39,7 +39,7 @@ var app = new Vue({
         sub() {
             var self = this;
             axios.post('/api/transaction', {
-                category: this.category,
+                description: this.description,
                 amount: "-" + this.amount
             }).then(function (response) {
                 self.fetchBudget();

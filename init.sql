@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS transactions (
     month       INTEGER,
     timestamp   DATETIME DEFAULT CURRENT_TIMESTAMP,
 
-    category    TEXT, 
+    description TEXT, 
     amount      DECIMAL(8,2),
     FOREIGN KEY(userid) REFERENCES users(id));
 

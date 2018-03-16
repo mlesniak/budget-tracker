@@ -58,7 +58,7 @@ func postHandler(w http.ResponseWriter, r *http.Request) {
 	var t Transaction
 	dec.Decode(&t)
 	w.WriteHeader(http.StatusOK)
-	trans := NewTransaction(t.Category, t.Amount.StringFixed(2))
+	trans := NewTransaction(t.Description, t.Amount.StringFixed(2))
 	Save(trans)
 }
 

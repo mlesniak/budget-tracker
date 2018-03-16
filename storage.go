@@ -54,7 +54,7 @@ func executeFile(fileName string) {
 // Save a new transaction.
 func Save(t Transaction) {
 	statement, err := database.Prepare(
-		"INSERT INTO transactions (userid, year, month, timestamp, category, amount)" +
+		"INSERT INTO transactions (userid, year, month, timestamp, description, amount)" +
 			"VALUES (?,?,?,?,?,?)")
 	if err != nil {
 		log.Fatal("Invalid insert query", err)
@@ -62,7 +62,7 @@ func Save(t Transaction) {
 	amount, _ := t.Amount.Float64()
 	year, month, _ := t.Timestamp.Date()
 	log.Println("Saving transaction", t)
-	statement.Exec(userID, year, month, t.Timestamp, t.Category, amount)
+	statement.Exec(userID, year, month, t.Timestamp, t.Description, amount)
 }
 
 // Load all transactions for a given year and month.
@@ -73,17 +73,17 @@ func Load(year, month int) Transactions {
 
 	log.Println("Loading transactions for year=", year, "month=", month)
 	rows, err := database.Query(
-		"SELECT timestamp, category, amount FROM transactions WHERE "+
+		"SELECT timestamp, description, amount FROM transactions WHERE "+
 			"userid = ? AND year = ? AND month = ? ORDER BY timestamp ASC", userID, year, month)
 	if err != nil {
 		log.Fatal("Unable to execute query", err)
 	}
 	for rows.Next() {
 		var timestamp time.Time
-		var category string
+		var description string
 		var amount Amount
-		rows.Scan(&timestamp, &category, &amount)
-		t := Transaction{category, timestamp, amount}
+		rows.Scan(&timestamp, &description, &amount)
+		t := Transaction{description, timestamp, amount}
 		ts = append(ts, t)
 	}
 
