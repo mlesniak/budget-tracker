@@ -28,10 +28,10 @@ func TestSave(t *testing.T) {
 	if len(tns) != 2 {
 		t.Fatal("Wrong number of transactions")
 	}
-	if tns[0].Category != "income1"  {
+	if tns[0].Description != "income1"  {
 		t.Fatal("income1 not first")
 	}
-	if tns[1].Category != "income2"  {
+	if tns[1].Description != "income2"  {
 		t.Fatal("income2 not second")
 	}
 }
