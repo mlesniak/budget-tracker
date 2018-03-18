@@ -1,5 +1,8 @@
 language: go
 script: 
+  - go get -u github.com/gorilla/mux
+  - go get -u github.com/shopspring/decimal
+  - go get -u github.com/mattn/go-sqlite3
   - go get -u github.com/golang/lint/golint
   - golint ./...
   - go test
