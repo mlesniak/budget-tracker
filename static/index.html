@@ -19,42 +19,33 @@
                 <a class="nav-link active" id="budget-tab" data-toggle="tab" href="#budget" role="tab" aria-controls="budget" aria-selected="true">Budget</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="transaction-tab" data-toggle="tab" href="#transaction" role="tab" aria-controls="transaction" aria-selected="false">Add</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" id="list-tab" data-toggle="tab" href="#list" role="tab" aria-controls="list" aria-selected="false">Show</a>
+                <a class="nav-link" id="list-tab" data-toggle="tab" href="#list" role="tab" aria-controls="list" aria-selected="false">Transactions</a>
             </li>
         </ul>
+
         <div class="tab-content" id="tabContent">
             <div class="tab-pane fade show active" id="budget" role="tabpanel" aria-labelledby="budget-tab">
-                <div class="card mt-5">
-                    <div class="card-header">
-                        Budget
-                    </div>
-                    <ul class="list-group list-group-flush" v-cloak>
-                        <li class="list-group-item">Balance: {{budget.balance}}</li>
-                        <li class="list-group-item">Daily budget: {{budget.daily}}</li>
-                        <li class="list-group-item">Remaining days: {{budget.remainingDays}}</li>
-                    </ul>
+                <div v-cloak class="budget">
+                    {{budget.balance}} = {{budget.daily}} for {{budget.remainingDays}} days
                 </div>
-            </div>
-            <div class="tab-pane fade" id="transaction" role="tabpanel" aria-labelledby="transaction-tab">
                 <form v-on:submit.prevent="" class="mt-3">
                     <div class="form-group row">
-                        <label for="Description" class="col-2 col-form-label">Description</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="Description" v-model="description">
+                            <input placeholder="Description" type="text" class="form-control" id="Description" v-model="description">
                         </div>
                     </div>
+                    <!-- TODO ML Round buttons, responsive layout. -->
                     <div class="form-group row">
-                        <label for="Amount" class="col-2 col-form-label">Amount</label>
-                        <div class="col-sm-10">
-                            <input type="number" class="form-control" id="Amount" v-model="amount" placeholder="0.00">
+                        <div class="col-sm-1">
+                            <button v-on:click="add()" type="submit" class="form-control btn btn-success" value="+">+</button>
                         </div>
-
+                        <div class="col-sm-6">
+                            <input placeholder="Amount" type="number" class="form-control" id="Amount" v-model="amount" placeholder="0.00">
+                        </div>
+                        <div class="col-sm-1">
+                            <button v-on:click="sub()" type="submit" class="form-control btn btn-danger" value="-">-</button>
+                        </div>
                     </div>
-                    <button v-on:click="add()" type="submit" class="btn btn-primary" value="+">+</button>
-                    <button v-on:click="sub()" type="submit" class="btn btn-primary" value="-">-</button>
                 </form>
             </div>
             <div class="tab-pane fade" id="list" role="tabpanel" aria-labelledby="list-tab">
