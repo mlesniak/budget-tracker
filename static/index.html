@@ -50,11 +50,14 @@
             </div>
 
             <div class="tab-pane fade" id="list" role="tabpanel" aria-labelledby="list-tab">
-                <ul class="list-group" v-cloak>
-                    <li class="list-group-item" v-for="t in transactions">
-                        {{t.description}} {{t.amount}}
-                    </li>
-                </ul>
+                <table class="table">
+                    <!-- Add red and green  -->
+                    <tr v-for="t, index in transactions">
+                        <td>{{t.timestamp}}</td>
+                        <td>{{t.description}}</td>
+                        <td v-bind:class="{ 'table-success': isIncome(index) }">{{t.amount}}</td>
+                    </tr>
+                </table>
             </div>
         </div>
     </div>

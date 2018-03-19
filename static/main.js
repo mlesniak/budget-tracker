@@ -14,6 +14,10 @@ var app = new Vue({
     },
 
     methods: {
+        isIncome(index) {
+            return this.transactions[index].amount > 0;
+        },
+
         fetchTransactions() {
             axios.get('/api/transaction/2018/3').then(response => {
                 this.transactions = response.data;
