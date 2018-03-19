@@ -37,6 +37,7 @@ var app = new Vue({
                 amount: this.amount
             }).then(function (response) {
                 self.fetchBudget();
+                self.fetchTransactions();
             });
         },
 
@@ -47,6 +48,7 @@ var app = new Vue({
                 amount: "-" + this.amount
             }).then(function (response) {
                 self.fetchBudget();
+                self.fetchTransactions();
             });
         }
     }
