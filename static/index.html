@@ -53,7 +53,7 @@
                 <table class="table">
                     <!-- Add red and green  -->
                     <tr v-for="t, index in transactions">
-                        <td>{{t.timestamp}}</td>
+                        <td>{{getFormattedDate(new Date(t.timestamp))}}</td>
                         <td>{{t.description}}</td>
                         <td v-bind:class="{ 'table-success': isIncome(index) }">{{t.amount}}</td>
                     </tr>
