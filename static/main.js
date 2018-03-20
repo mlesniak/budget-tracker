@@ -19,9 +19,7 @@ Vue.component('transaction-input', {
                 description: this.description,
                 amount: this.amount
             }).then(function (response) {
-                // TODO ML Update event and listener in parent
-                // self.fetchBudget();
-                // self.fetchTransactions();
+                app.$emit('update');
             });
         },
         sub() {
@@ -30,8 +28,7 @@ Vue.component('transaction-input', {
                 description: this.description,
                 amount: "-" + this.amount
             }).then(function (response) {
-                // self.fetchBudget();
-                // self.fetchTransactions();
+                app.$emit('update');
             });
         },
     }
@@ -48,8 +45,11 @@ var app = new Vue({
         description: ""
     },
     created() {
-        this.fetchTransactions();
-        this.fetchBudget();
+        this.$on('update', function() {
+            this.fetchTransactions();
+            this.fetchBudget();
+        });
+        this.$emit('update');
     },
 
     methods: {
