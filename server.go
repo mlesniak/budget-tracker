@@ -32,15 +32,10 @@ func fileHandler(w http.ResponseWriter, r *http.Request) {
 		localMode = false
 	}
 
-	log.Println("localMode", localMode)
 	if localMode {
 		f := http.FileServer(http.Dir("./static/"))
 		f.ServeHTTP(w, r)
 		return
-	}
-
-	for _, n := range AssetNames() {
-		log.Println("Asset:", n)
 	}
 
 	// Serving from files in go-bindata only.
