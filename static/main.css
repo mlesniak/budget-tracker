@@ -5,3 +5,8 @@
     text-align: center;
     padding: 20px;
 }
+
+body {
+    background-color: black;
+    color: lightgray;
+}
