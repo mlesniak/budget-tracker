@@ -8,12 +8,7 @@
 <body>
     <div id="app">
         <budget-display v-bind="budget"></budget-display>
-        <form v-on:submit.prevent="">
-            <input placeholder="Description" type="text" v-model="description" autofocus="autofocus">
-            <button v-on:click="add()" type="submit" value="+">+</button>
-            <input placeholder="Amount" type="number" v-model="amount" placeholder="0.00">
-            <button v-on:click="sub()" type="submit" value="-">-</button>
-        </form>
+        <transaction-input></transaction-input>
         <table>
             <tr v-for="t, index in transactions">
                 <td>{{getFormattedDate(new Date(t.timestamp))}}</td>
@@ -30,6 +25,15 @@
     <div>
         {{balance}} = {{daily}} for {{remainingDays}} days
     </div>
+</script>
+
+<script type="text/x-template" id="transaction-input">
+    <form v-on:submit.prevent="">
+            <input placeholder="Description" type="text" v-model="description" autofocus="autofocus">
+            <button v-on:click="add()" type="submit" value="+">+</button>
+            <input placeholder="Amount" type="number" v-model="amount" placeholder="0.00">
+            <button v-on:click="sub()" type="submit" value="-">-</button>
+        </form>
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>

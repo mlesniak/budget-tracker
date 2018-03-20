@@ -1,7 +1,41 @@
 Vue.component('budget-display', {
     template: "#budget",
     props: ["balance", "daily", "remainingDays"]
-  })
+});
+
+
+Vue.component('transaction-input', {
+    template: "#transaction-input",
+    data: function () {
+        return {
+            description: undefined,
+            amount: undefined
+        }
+    },
+    methods: {
+        add() {
+            var self = this;
+            axios.post('/api/transaction', {
+                description: this.description,
+                amount: this.amount
+            }).then(function (response) {
+                // TODO ML Update event and listener in parent
+                // self.fetchBudget();
+                // self.fetchTransactions();
+            });
+        },
+        sub() {
+            var self = this;
+            axios.post('/api/transaction', {
+                description: this.description,
+                amount: "-" + this.amount
+            }).then(function (response) {
+                // self.fetchBudget();
+                // self.fetchTransactions();
+            });
+        },
+    }
+});
 
 var app = new Vue({
     el: '#app',
@@ -35,28 +69,6 @@ var app = new Vue({
             });
         },
 
-        add() {
-            var self = this;
-            axios.post('/api/transaction', {
-                description: this.description,
-                amount: this.amount
-            }).then(function (response) {
-                self.fetchBudget();
-                self.fetchTransactions();
-            });
-        },
-
-        sub() {
-            var self = this;
-            axios.post('/api/transaction', {
-                description: this.description,
-                amount: "-" + this.amount
-            }).then(function (response) {
-                self.fetchBudget();
-                self.fetchTransactions();
-            });
-        },
-
         getFormattedDate(date) {
             var year = date.getFullYear();
             var month = (1 + date.getMonth()).toString();
@@ -64,9 +76,9 @@ var app = new Vue({
             var day = date.getDate().toString();
             day = day.length > 1 ? day : '0' + day;
             return year + '-' + month + '-' + day;
-          }
-          
-          
+        }
+
+
     }
 })
 
