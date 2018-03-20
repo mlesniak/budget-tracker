@@ -1,3 +1,7 @@
+Vue.component('budget-display', {
+    
+  })
+
 var app = new Vue({
     el: '#app',
     data: {
