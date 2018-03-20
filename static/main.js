@@ -1,5 +1,6 @@
 Vue.component('budget-display', {
-    
+    template: "#budget",
+    props: ["balance", "daily", "remainingDays"]
   })
 
 var app = new Vue({

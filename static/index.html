@@ -7,9 +7,7 @@
 
 <body>
     <div id="app">
-        <div>
-            {{budget.balance}} = {{budget.daily}} for {{budget.remainingDays}} days
-        </div>
+        <budget-display v-bind="budget"></budget-display>
         <form v-on:submit.prevent="">
             <input placeholder="Description" type="text" v-model="description" autofocus="autofocus">
             <button v-on:click="add()" type="submit" value="+">+</button>
@@ -27,6 +25,12 @@
     </div>
     </div>
 </body>
+
+<script type="text/x-template" id="budget">
+    <div>
+        {{balance}} = {{daily}} for {{remainingDays}} days
+    </div>
+</script>
 
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
