@@ -1,7 +1,7 @@
 [v-cloak] > * { display:none; }
 
 hr {
-    border: 1px solid lightgray;
+    border: 1px solid lightblue;
 }
 
 .daily {
@@ -19,4 +19,16 @@ hr {
     padding: 3rem 1.5rem;
     text-align: center;
 }
+
+.btn-xl {
+    padding: 0px 40px 0px 40px;
+}
   
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+input[type=number] {
+    -moz-appearance:textfield;
+}
