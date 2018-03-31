@@ -37,7 +37,7 @@
 </script>
 
 <script type="text/x-template" id="transactions">
-    <table>
+    <table class="table">
         <tr v-for="t, index in transactions">
             <td>{{getFormattedDate(new Date(t.timestamp))}}</td>
             <td>{{t.description}}</td>
