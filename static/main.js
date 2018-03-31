@@ -7,6 +7,11 @@ Vue.component('budget-display', {
 Vue.component('transactions', {
     template: "#transactions",
     props: ["transactions"],
+    data: function() {
+        return {
+            active: false
+        }
+    },
     methods: {
         getFormattedDate(date) {
             var year = date.getFullYear();

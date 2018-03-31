@@ -38,14 +38,14 @@
 
 <script type="text/x-template" id="transactions">
     <table class="table">
-        <thead class="thead-light">
+        <thead class="thead-light" v-on:click="active = !active">
             <tr>
-                <th>Date</th>
-                <th>Description</th>
-                <th>Amount</th>
+                <th class="left">Date</th>
+                <th class="left">Description</th>
+                <th class="left">Amount</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody v-if="active">
         <tr v-for="t, index in transactions">
             <td>{{getFormattedDate(new Date(t.timestamp))}}</td>
             <td class="left">{{t.description}}</td>
