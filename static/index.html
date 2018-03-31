@@ -13,9 +13,10 @@
 </head>
 
 <body>
-    <div class="container">
+    <div class="container starter-template">
         <div id="app" class="app">
             <budget-display v-bind="budget"></budget-display>
+            <hr/>
             <transaction-input></transaction-input>
             <transactions :transactions="transactions"></transactions>
         </div>
@@ -24,7 +25,13 @@
 
 <script type="text/x-template" id="budget">
     <div>
-        {{balance}} = {{daily}} for {{remainingDays}} days
+        <div class="daily">
+            {{daily}} EUR
+        </div>
+        <div class="monthly">
+                {{balance}} for {{remainingDays}} day(s)
+            </div>
+        <!-- {{balance}} = {{daily}} for {{remainingDays}} days -->
     </div>
 </script>
 

@@ -1,12 +1,22 @@
 [v-cloak] > * { display:none; }
 
-.budget {
-    font-size: 25px;
-    text-align: center;
-    padding: 20px;
+hr {
+    border: 1px solid lightgray;
 }
 
-body {
-    /* background-color: black; */
-    /* color: darkgray; */
+.daily {
+    font-size: 40px;
+    text-align: center;
+    /* padding: 10px; */
 }
+
+.monthly {
+    text-align: center;
+    color: gray;
+}
+
+.starter-template {
+    padding: 3rem 1.5rem;
+    text-align: center;
+}
+  
