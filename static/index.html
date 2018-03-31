@@ -9,13 +9,7 @@
     <div id="app">
         <budget-display v-bind="budget"></budget-display>
         <transaction-input></transaction-input>
-        <table>
-            <tr v-for="t, index in transactions">
-                <td>{{getFormattedDate(new Date(t.timestamp))}}</td>
-                <td>{{t.description}}</td>
-                <td>{{t.amount}}</td>
-            </tr>
-        </table>
+        <transactions :transactions="transactions"></transactions>
     </div>
     </div>
     </div>
@@ -25,6 +19,16 @@
     <div>
         {{balance}} = {{daily}} for {{remainingDays}} days
     </div>
+</script>
+
+<script type="text/x-template" id="transactions">
+    <table>
+        <tr v-for="t, index in transactions">
+            <td>{{getFormattedDate(new Date(t.timestamp))}}</td>
+            <td>{{t.description}}</td>
+            <td>{{t.amount}}</td>
+        </tr>
+    </table>    
 </script>
 
 <script type="text/x-template" id="transaction-input">
