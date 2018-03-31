@@ -23,6 +23,10 @@ hr {
 .btn-xl {
     padding: 0px 40px 0px 40px;
 }
+
+.left {
+    text-align: left;
+}
   
 input[type=number]::-webkit-inner-spin-button, 
 input[type=number]::-webkit-outer-spin-button { 

@@ -38,11 +38,20 @@
 
 <script type="text/x-template" id="transactions">
     <table class="table">
+        <thead class="thead-light">
+            <tr>
+                <th>Date</th>
+                <th>Description</th>
+                <th>Amount</th>
+            </tr>
+        </thead>
+        <tbody>
         <tr v-for="t, index in transactions">
             <td>{{getFormattedDate(new Date(t.timestamp))}}</td>
-            <td>{{t.description}}</td>
+            <td class="left">{{t.description}}</td>
             <td>{{t.amount}}</td>
         </tr>
+        </tbody>
     </table>    
 </script>
 
