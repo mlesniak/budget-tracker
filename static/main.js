@@ -65,13 +65,17 @@ var app = new Vue({
     },
 
     methods: {
+        getDatePath() {
+            var d = new Date();
+            return (d.getYear() + 1900) + "/" + (d.getMonth() + 1);
+        },
         fetchTransactions() {
-            axios.get('/api/transaction/2018/3').then(response => {
+            axios.get('/api/transaction/' + this.getDatePath()).then(response => {
                 this.transactions = response.data;
             });
         },
         fetchBudget() {
-            axios.get('/api/transaction/2018/3/budget').then(response => {
+            axios.get('/api/transaction/' + this.getDatePath() + '/budget').then(response => {
                 this.budget = response.data;
             });
         },
