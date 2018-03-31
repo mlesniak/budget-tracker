@@ -13,12 +13,12 @@
 </head>
 
 <body>
-    <div id="app">
-        <budget-display v-bind="budget"></budget-display>
-        <transaction-input></transaction-input>
-        <transactions :transactions="transactions"></transactions>
-    </div>
-    </div>
+    <div class="container">
+        <div id="app" class="app">
+            <budget-display v-bind="budget"></budget-display>
+            <transaction-input></transaction-input>
+            <transactions :transactions="transactions"></transactions>
+        </div>
     </div>
 </body>
 
