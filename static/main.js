@@ -63,7 +63,9 @@ var app = new Vue({
     },
     created() {
         this.$on('update', function() {
+            // TODO ML Move to transactions component!
             this.fetchTransactions();
+            // TODO ML Move to budget component!
             this.fetchBudget();
         });
         this.$emit('update');

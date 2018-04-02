@@ -37,22 +37,27 @@
 </script>
 
 <script type="text/x-template" id="transactions">
-    <table class="table">
-        <thead class="thead-light" v-on:click="active = !active">
-            <tr>
-                <th class="left">Date</th>
-                <th class="left">Description</th>
-                <th class="left">Amount</th>
-            </tr>
-        </thead>
-        <tbody v-if="active">
-        <tr v-for="t, index in transactions">
-            <td>{{getFormattedDate(new Date(t.timestamp))}}</td>
-            <td class="left">{{t.description}}</td>
-            <td>{{t.amount}}</td>
-        </tr>
-        </tbody>
-    </table>    
+    <div>
+        <div v-if="!active" v-on:click="active = true" class="col-xs-12 table-button">
+            Click here to show transactions
+        </div>
+        <table class="table" v-if="active">
+            <thead class="thead-light">
+                <tr>
+                    <th class="text-left  col-xs-1">Date</th>
+                    <th class="text-left  col-xs-10">Description</th>
+                    <th class="text-right col-xs-1">Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="t, index in transactions">
+                    <td class="text-left  col-xs-1">{{getFormattedDate(new Date(t.timestamp))}}</td>
+                    <td class="text-left  col-xs-10">{{t.description}}</td>
+                    <td class="text-right col-xs-1">{{t.amount}}</td>
+                </tr>
+            </tbody>
+        </table>    
+    </div>  
 </script>
 
 <script type="text/x-template" id="transaction-input">
