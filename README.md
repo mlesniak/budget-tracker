@@ -5,6 +5,10 @@
 
 A budget tracker.
 
+# Status
+
+![Screenshot](current-status.png)
+
 # Guiding Principles
 
 I will be guided by the following principles
@@ -17,5 +21,4 @@ I will be guided by the following principles
 
 # Project Organization
 
-The project is organized in a [Trello board](https://trello.com/b/l6MnCUzv/budget-tracker).
-
+The project is organized in with GitHub Issues and its corresponding project board.
