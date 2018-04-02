@@ -7,6 +7,9 @@ A budget tracker.
 
 # Status
 
+In the following we show a screenshot of the current mobile user interface with
+fake data (i.e. everything is positive, no expenses, ...).
+
 ![Screenshot](current-status.png)
 
 # Technologies
