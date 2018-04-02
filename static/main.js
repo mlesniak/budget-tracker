@@ -79,6 +79,7 @@ var app = new Vue({
         fetchTransactions() {
             axios.get('/api/transaction/' + this.getDatePath()).then(response => {
                 this.transactions = response.data;
+                this.transactions.reverse();
             });
         },
         fetchBudget() {
