@@ -9,6 +9,11 @@ A budget tracker.
 
 ![Screenshot](current-status.png)
 
+# Technologies
+
+- Backend: Go(lang)
+- Frontend: Vuejs + Bootstrap
+
 # Guiding Principles
 
 I will be guided by the following principles
