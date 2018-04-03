@@ -32,7 +32,6 @@
         <div class="monthly">
                 {{balance}} EUR for {{remainingDays}} day(s)
             </div>
-        <!-- {{balance}} = {{daily}} for {{remainingDays}} days -->
     </div>
 </script>
 
@@ -61,9 +60,9 @@
 </script>
 
 <script type="text/x-template" id="transaction-input">
-    <form v-on:submit.prevent="">
+    <form v-on:submit.prevent="" v-if="show">
         <div class="form-group">
-            <input placeholder="Enter description" required="true" class="form-control" type="text" v-model="description" autofocus="autofocus">
+            <input placeholder="Enter description" ref="input" required="true" class="form-control" type="text" v-model="description" autofocus="autofocus">
         </div>
         <div class="form-group">
             <input placeholder="Amount" step="0.01"  required="true" class="form-control" type="number" v-model="amount" placeholder="0.00">

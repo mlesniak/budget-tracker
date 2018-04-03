@@ -30,7 +30,8 @@ Vue.component('transaction-input', {
     data: function () {
         return {
             description: undefined,
-            amount: undefined
+            amount: undefined,
+            show: true
         }
     },
     methods: {
@@ -41,6 +42,7 @@ Vue.component('transaction-input', {
                 amount: this.amount
             }).then(function (response) {
                 app.$emit('update');
+                self.clear();
             });
         },
         sub() {
@@ -50,8 +52,22 @@ Vue.component('transaction-input', {
                 amount: "-" + this.amount
             }).then(function (response) {
                 app.$emit('update');
+                self.clear();
             });
         },
+        clear() {
+            this.description = undefined;
+            this.amount = undefined;
+            // Trick to reset/clear native browser form validation state.
+            // See https://bootstrap-vue.js.org/docs/components/form/
+            this.show = false;
+            this.$nextTick(() => { 
+                this.show = true;
+                this.$nextTick(() => {
+                    this.$refs.input.focus();
+                });
+            });
+        }
     }
 });
 
