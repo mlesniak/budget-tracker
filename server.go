@@ -58,6 +58,11 @@ func fileHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func listHandler(w http.ResponseWriter, r *http.Request) {
+	if !isAuthenticated(r) {
+		w.WriteHeader(http.StatusUnauthorized)
+		return
+	}
+	
 	log.Println("List transactions handler called. vars=", mux.Vars(r))
 	year, month, err := parseStandardFields(w, r)
 	if err != nil {
@@ -90,6 +95,11 @@ func budgetHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func postHandler(w http.ResponseWriter, r *http.Request) {
+	if !isAuthenticated(r) {
+		w.WriteHeader(http.StatusUnauthorized)
+		return
+	}
+
 	vars := mux.Vars(r)
 	log.Println("Post transaction handler called. vars=", vars)
 
