@@ -11,13 +11,15 @@ import (
 	"github.com/gorilla/mux"
 )
 
+type httpHandler = func(w http.ResponseWriter, r *http.Request)
+
 // StartServer starts the HTTP server and configures all necessary routes.
 func StartServer() {
 	// TODO ML Refactor into multiple files / restructure this file.
 	r := mux.NewRouter()
-	r.HandleFunc("/api/transaction/{year}/{month}", listHandler)
-	r.HandleFunc("/api/transaction/{year}/{month}/budget", budgetHandler)
-	r.HandleFunc("/api/transaction", postHandler).
+	r.HandleFunc("/api/transaction/{year}/{month}", requireAuthentication(listHandler))
+	r.HandleFunc("/api/transaction/{year}/{month}/budget", requireAuthentication(budgetHandler))
+	r.HandleFunc("/api/transaction", requireAuthentication(postHandler)).
 		Methods("POST")
 	r.PathPrefix("/").HandlerFunc(fileHandler)
 	port := ":8080"
@@ -58,11 +60,6 @@ func fileHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func listHandler(w http.ResponseWriter, r *http.Request) {
-	if !isAuthenticated(r) {
-		w.WriteHeader(http.StatusUnauthorized)
-		return
-	}
-	
 	log.Println("List transactions handler called. vars=", mux.Vars(r))
 	year, month, err := parseStandardFields(w, r)
 	if err != nil {
@@ -76,11 +73,6 @@ func listHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func budgetHandler(w http.ResponseWriter, r *http.Request) {
-	if !isAuthenticated(r) {
-		w.WriteHeader(http.StatusUnauthorized)
-		return
-	}
-
 	log.Println("Budget transactions handler called. vars=", mux.Vars(r))
 	year, month, err := parseStandardFields(w, r)
 	if err != nil {
@@ -95,11 +87,6 @@ func budgetHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func postHandler(w http.ResponseWriter, r *http.Request) {
-	if !isAuthenticated(r) {
-		w.WriteHeader(http.StatusUnauthorized)
-		return
-	}
-
 	vars := mux.Vars(r)
 	log.Println("Post transaction handler called. vars=", vars)
 
@@ -127,6 +114,17 @@ func parseStandardFields(w http.ResponseWriter, r *http.Request) (int, int, erro
 	}
 
 	return year, month, nil
+}
+
+func requireAuthentication(fn httpHandler) httpHandler {
+	return func(w http.ResponseWriter, r *http.Request) {
+		if !isAuthenticated(r) {
+			w.WriteHeader(http.StatusUnauthorized)
+			return
+		}
+
+		fn(w, r)
+	}
 }
 
 func isAuthenticated(r *http.Request) bool {
