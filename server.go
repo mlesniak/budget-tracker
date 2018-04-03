@@ -71,11 +71,7 @@ func listHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func budgetHandler(w http.ResponseWriter, r *http.Request) {
-	// List cookie
-	cookie, _ := r.Cookie("auth")
-	log.Println(cookie.Value)
-	if cookie.Value != "password" {
-		log.Println("Cookie password not set")
+	if !isAuthenticated(r) {
 		w.WriteHeader(http.StatusUnauthorized)
 		return
 	}
@@ -121,4 +117,14 @@ func parseStandardFields(w http.ResponseWriter, r *http.Request) (int, int, erro
 	}
 
 	return year, month, nil
+}
+
+func isAuthenticated(r *http.Request) bool {
+	cookie, _ := r.Cookie("auth")
+	if cookie.Value != "password" {
+		log.Println("Cookie password not set")
+		return false
+	}
+
+	return true
 }
