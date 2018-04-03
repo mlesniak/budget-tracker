@@ -71,6 +71,15 @@ func listHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func budgetHandler(w http.ResponseWriter, r *http.Request) {
+	// List cookie
+	cookie, _ := r.Cookie("auth")
+	log.Println(cookie.Value)
+	if cookie.Value != "password" {
+		log.Println("Cookie password not set")
+		w.WriteHeader(http.StatusUnauthorized)
+		return
+	}
+
 	log.Println("Budget transactions handler called. vars=", mux.Vars(r))
 	year, month, err := parseStandardFields(w, r)
 	if err != nil {
