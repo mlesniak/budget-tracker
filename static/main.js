@@ -6,13 +6,20 @@ Vue.component('budget-display', {
 
 Vue.component('cookie-input', {
     template: "#cookie-input",
-    data: function() {
+    data: function () {
         return {
             secret: undefined
         };
     }, methods: {
         submitCookie(e) {
-            console.log("Storing cookie", this.secret);
+            // TODO ML Set secure and enforce https.
+            this.createCookie("auth", this.secret, 365);
+        },
+        createCookie(name, value, days) {
+            var date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            var expires = "; expires=" + date.toUTCString();
+            document.cookie = name + "=" + value + expires + "; path=/";
         }
     }
 });
@@ -21,7 +28,7 @@ Vue.component('cookie-input', {
 Vue.component('transactions', {
     template: "#transactions",
     props: ["transactions"],
-    data: function() {
+    data: function () {
         return {
             active: false
         }
@@ -75,7 +82,7 @@ Vue.component('transaction-input', {
             // Trick to reset/clear native browser form validation state.
             // See https://bootstrap-vue.js.org/docs/components/form/
             this.show = false;
-            this.$nextTick(() => { 
+            this.$nextTick(() => {
                 this.show = true;
                 this.$nextTick(() => {
                     this.$refs.input.focus();
@@ -92,7 +99,7 @@ var app = new Vue({
         budget: {}
     },
     created() {
-        this.$on('update', function() {
+        this.$on('update', function () {
             // TODO ML Move to transactions component!
             this.fetchTransactions();
             // TODO ML Move to budget component!
