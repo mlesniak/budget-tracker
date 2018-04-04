@@ -4,6 +4,20 @@ Vue.component('budget-display', {
 });
 
 
+Vue.component('cookie-input', {
+    template: "#cookie-input",
+    data: function() {
+        return {
+            secret: undefined
+        };
+    }, methods: {
+        submitCookie(e) {
+            console.log("Storing cookie", this.secret);
+        }
+    }
+});
+
+
 Vue.component('transactions', {
     template: "#transactions",
     props: ["transactions"],

@@ -15,6 +15,8 @@
 <body>
     <div class="container starter-template">
         <div id="app" class="app">
+            <cookie-input></cookie-input>
+            <hr/>
             <budget-display v-bind="budget"></budget-display>
             <hr/>
             <transaction-input></transaction-input>
@@ -71,6 +73,17 @@
             <button v-on:click="sub()" class="btn btn-xl btn-danger" type="submit" value="-">-</button>
             <button v-on:click="add()" class="btn btn-success" type="submit" value="+">+</button>
         </div>
+        </form>
+</script>
+
+<script type="text/x-template" id="cookie-input">
+        <form v-on:submit.prevent="submitCookie"  class="form-inline">
+            <div class="input-group mb-2 mr-sm-2">
+                <input placeholder="Enter secret" required="true" class="form-control" type="text" v-model="secret" autofocus="autofocus">
+            </div>
+            <button type="submit" class="btn btn-success mb-2">Submit</button>
+            <!-- TODO ROUTE -->
+        <!-- </div> -->
         </form>
 </script>
 
