@@ -15,16 +15,22 @@
 <body>
     <div class="container starter-template">
         <div id="app" class="app">
-            <cookie-input></cookie-input>
-            <hr/>
-            <budget-display v-bind="budget"></budget-display>
-            <hr/>
-            <transaction-input></transaction-input>
-            <hr/>
-            <transactions :transactions="transactions"></transactions>
+            1a
+            <router-view></router-view>
+            2
         </div>
     </div>
 </body>
+
+<script type="text/x-template" id="homepage">
+    <div>
+        <!-- <budget-display v-bind="budget"></budget-display> -->
+        <hr/>
+        <transaction-input></transaction-input>
+        <hr/>
+        <transactions></transactions>
+    </div>
+</script>
 
 <script type="text/x-template" id="budget">
     <div>
@@ -82,8 +88,6 @@
                 <input placeholder="Enter secret" required="true" class="form-control" type="text" v-model="secret" autofocus="autofocus">
             </div>
             <button type="submit" class="btn btn-success mb-2">Submit</button>
-            <!-- TODO ROUTE -->
-        <!-- </div> -->
         </form>
 </script>
 

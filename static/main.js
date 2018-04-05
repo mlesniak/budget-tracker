@@ -4,7 +4,7 @@ Vue.component('budget-display', {
 });
 
 
-Vue.component('cookie-input', {
+var cookieComponent = Vue.component('cookie-input', {
     template: "#cookie-input",
     data: function () {
         return {
@@ -14,6 +14,7 @@ Vue.component('cookie-input', {
         submitCookie(e) {
             // TODO ML Set secure and enforce https.
             this.createCookie("auth", this.secret, 365);
+            console.log("TODO redirect to homepage");
         },
         createCookie(name, value, days) {
             var date = new Date();
@@ -27,13 +28,25 @@ Vue.component('cookie-input', {
 
 Vue.component('transactions', {
     template: "#transactions",
-    props: ["transactions"],
+    // props: ["transactions"],
     data: function () {
         return {
-            active: false
+            active: false,
+            transactions: []
         }
     },
+    created: function() {
+        this.$on('update', function () {
+            console.log("update received");
+            this.fetchTransactions();
+        });
+        this.fetchTransactions();
+    },
     methods: {
+        getDatePath() {
+            var d = new Date();
+            return (d.getYear() + 1900) + "/" + (d.getMonth() + 1);
+        },
         getFormattedDate(date) {
             var year = date.getFullYear();
             var month = (1 + date.getMonth()).toString();
@@ -41,7 +54,13 @@ Vue.component('transactions', {
             var day = date.getDate().toString();
             day = day.length > 1 ? day : '0' + day;
             return day + "." + month;
-        }
+        },
+        fetchTransactions() {
+            axios.get('/api/transaction/' + this.getDatePath()).then(response => {
+                this.transactions = response.data;
+                this.transactions.reverse();
+            });
+        },
     }
 });
 
@@ -92,32 +111,41 @@ Vue.component('transaction-input', {
     }
 });
 
+var Homepage = Vue.component('homepage', {
+    template: "#homepage"
+});
+
+
+var routes = [
+    { path: '/cookie', component: cookieComponent },
+    { path: '/', component: Homepage },
+];
+
+var router = new VueRouter({
+    routes: routes
+});
+
 var app = new Vue({
     el: '#app',
+    router: router,
     data: {
-        transactions: [],
         budget: {}
     },
-    created() {
+    created: function() {
         this.$on('update', function () {
             // TODO ML Move to transactions component!
-            this.fetchTransactions();
+            // this.fetchTransactions();
             // TODO ML Move to budget component!
             this.fetchBudget();
         });
         this.$emit('update');
+        console.log("update emitted");
     },
 
     methods: {
         getDatePath() {
             var d = new Date();
             return (d.getYear() + 1900) + "/" + (d.getMonth() + 1);
-        },
-        fetchTransactions() {
-            axios.get('/api/transaction/' + this.getDatePath()).then(response => {
-                this.transactions = response.data;
-                this.transactions.reverse();
-            });
         },
         fetchBudget() {
             axios.get('/api/transaction/' + this.getDatePath() + '/budget').then(response => {
