@@ -1,6 +1,33 @@
 Vue.component('budget-display', {
     template: "#budget",
-    props: ["balance", "daily", "remainingDays"]
+    data: function () {
+        return {
+            balance: 0.0,
+            daily: 0.0,
+            remainingDays: 0
+        };
+    },
+    created: function() {
+        this.$on('update', function () {
+            this.fetchBudget();
+        });
+        this.fetchBudget();
+    },
+    methods: {
+        // TODO ML common used refactor!
+        getDatePath() {
+            var d = new Date();
+            return (d.getYear() + 1900) + "/" + (d.getMonth() + 1);
+        },
+        fetchBudget() {
+            axios.get('/api/transaction/' + this.getDatePath() + '/budget').then(response => {
+                var budget = response.data;
+                this.balance = budget.balance;
+                this.daily = budget.daily;
+                this.remainingDays = budget.remainingDays;
+            });
+        },
+    }
 });
 
 
@@ -14,7 +41,7 @@ var cookieComponent = Vue.component('cookie-input', {
         submitCookie(e) {
             // TODO ML Set secure and enforce https.
             this.createCookie("auth", this.secret, 365);
-            console.log("TODO redirect to homepage");
+            this.$router.push("/");
         },
         createCookie(name, value, days) {
             var date = new Date();
@@ -136,10 +163,10 @@ var app = new Vue({
             // TODO ML Move to transactions component!
             // this.fetchTransactions();
             // TODO ML Move to budget component!
-            this.fetchBudget();
+            // this.fetchBudget();
         });
-        this.$emit('update');
-        console.log("update emitted");
+        // this.$emit('update');
+        // console.log("update emitted");
     },
 
     methods: {
@@ -147,11 +174,11 @@ var app = new Vue({
             var d = new Date();
             return (d.getYear() + 1900) + "/" + (d.getMonth() + 1);
         },
-        fetchBudget() {
-            axios.get('/api/transaction/' + this.getDatePath() + '/budget').then(response => {
-                this.budget = response.data;
-            });
-        },
+        // fetchBudget() {
+        //     axios.get('/api/transaction/' + this.getDatePath() + '/budget').then(response => {
+        //         this.budget = response.data;
+        //     });
+        // },
     }
 })
 
