@@ -18,6 +18,7 @@ func StartServer() {
 	// TODO ML Refactor into multiple files / restructure this file.
 	r := mux.NewRouter()
 	r.HandleFunc("/api/transaction/{year}/{month}", requireAuthentication(listHandler))
+	r.HandleFunc("/api/authenticated", requireAuthentication(authHandler))
 	r.HandleFunc("/api/transaction/{year}/{month}/budget", requireAuthentication(budgetHandler))
 	r.HandleFunc("/api/transaction", requireAuthentication(postHandler)).
 		Methods("POST")
@@ -70,6 +71,12 @@ func listHandler(w http.ResponseWriter, r *http.Request) {
 	ts := Load(year, month)
 	enc := json.NewEncoder(w)
 	enc.Encode(ts)
+}
+
+func authHandler(w http.ResponseWriter, r *http.Request) {
+	log.Println("Auth handler called.")
+	bs := []byte("OK")
+	w.Write(bs)
 }
 
 func budgetHandler(w http.ResponseWriter, r *http.Request) {
@@ -128,8 +135,8 @@ func requireAuthentication(fn httpHandler) httpHandler {
 }
 
 func isAuthenticated(r *http.Request) bool {
-	cookie, _ := r.Cookie("auth")
-	if cookie.Value != "password" {
+	cookie, err := r.Cookie("auth")
+	if err != nil || cookie.Value != "password" {
 		log.Println("Cookie password not set")
 		return false
 	}
