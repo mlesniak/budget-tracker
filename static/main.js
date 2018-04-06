@@ -41,6 +41,7 @@ var cookieComponent = Vue.component('cookie-input', {
         submitCookie(e) {
             // TODO ML Set secure and enforce https.
             this.createCookie("auth", this.secret, 365);
+            app.$emit('update');
             this.$router.push("/");
         },
         createCookie(name, value, days) {
@@ -64,7 +65,6 @@ Vue.component('transactions', {
     },
     created: function() {
         this.$on('update', function () {
-            console.log("update received");
             this.fetchTransactions();
         });
         this.fetchTransactions();
@@ -139,7 +139,8 @@ Vue.component('transaction-input', {
 });
 
 var Homepage = Vue.component('homepage', {
-    template: "#homepage"
+    template: "#homepage",
+    props: ["authenticated"]
 });
 
 
@@ -156,29 +157,29 @@ var app = new Vue({
     el: '#app',
     router: router,
     data: {
-        budget: {}
+        authenticated: false
     },
     created: function() {
         this.$on('update', function () {
-            // TODO ML Move to transactions component!
-            // this.fetchTransactions();
-            // TODO ML Move to budget component!
-            // this.fetchBudget();
+            this.checkAuthentification();
         });
-        // this.$emit('update');
-        // console.log("update emitted");
+        this.checkAuthentification();
     },
-
     methods: {
         getDatePath() {
             var d = new Date();
             return (d.getYear() + 1900) + "/" + (d.getMonth() + 1);
         },
-        // fetchBudget() {
-        //     axios.get('/api/transaction/' + this.getDatePath() + '/budget').then(response => {
-        //         this.budget = response.data;
-        //     });
-        // },
+        checkAuthentification() {
+            var self = this;
+            axios.get('/api/authenticated')
+            .then(function (data) {
+                self.authenticated = true;
+            })
+            .catch(function (error) {
+                self.authenticated = false;
+            });
+        },
     }
 })
 

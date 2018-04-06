@@ -15,18 +15,23 @@
 <body>
     <div class="container starter-template">
         <div id="app" class="app">
-            <router-view></router-view>
+            <router-view v-bind:authenticated="authenticated"></router-view>
         </div>
     </div>
 </body>
 
 <script type="text/x-template" id="homepage">
-    <div>
-        <budget-display></budget-display>
-        <hr/>
-        <transaction-input></transaction-input>
-        <hr/>
-        <transactions></transactions>
+    <div v-cloak>
+        <div v-if="!authenticated">
+            <router-link to="/cookie">Enter password</router-link>
+        </div>
+        <div v-if="authenticated">
+            <budget-display></budget-display>
+            <hr/>
+            <transaction-input></transaction-input>
+            <hr/>
+            <transactions></transactions>
+        </div>
     </div>
 </script>
 
