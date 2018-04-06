@@ -166,10 +166,6 @@ var app = new Vue({
         this.checkAuthentification();
     },
     methods: {
-        getDatePath() {
-            var d = new Date();
-            return (d.getYear() + 1900) + "/" + (d.getMonth() + 1);
-        },
         checkAuthentification() {
             var self = this;
             axios.get('/api/authenticated')
