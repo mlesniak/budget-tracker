@@ -13,8 +13,13 @@ import (
 
 type httpHandler = func(w http.ResponseWriter, r *http.Request)
 
+// Password used for authentication layer
+var password string
+
 // StartServer starts the HTTP server and configures all necessary routes.
-func StartServer() {
+func StartServer(pw string) {
+	password = pw
+
 	// TODO ML Refactor into multiple files / restructure this file.
 	r := mux.NewRouter()
 	r.HandleFunc("/api/transaction/{year}/{month}", requireAuthentication(listHandler))
@@ -136,8 +141,8 @@ func requireAuthentication(fn httpHandler) httpHandler {
 
 func isAuthenticated(r *http.Request) bool {
 	cookie, err := r.Cookie("auth")
-	if err != nil || cookie.Value != "password" {
-		log.Println("Cookie password not set")
+	if err != nil || cookie.Value != password {
+		log.Println("Cookie password not set or invalid")
 		return false
 	}
 
