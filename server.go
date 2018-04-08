@@ -79,7 +79,6 @@ func listHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func authHandler(w http.ResponseWriter, r *http.Request) {
-	log.Println("Auth handler called.")
 	bs := []byte("OK")
 	w.Write(bs)
 }
