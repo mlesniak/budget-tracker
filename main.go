@@ -4,6 +4,7 @@ import (
 	"os"
 	"log")
 
+// TODO ML create generalized abstraction for assets vs local storage for docker
 func main() {
 	databasePath := os.Getenv("BUDGET_DATABASE")
 	if databasePath == "" {
