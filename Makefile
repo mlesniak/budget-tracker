@@ -5,7 +5,7 @@ pack:
 	go-bindata static/ init.sql
 
 docker:
-	docker build --build-arg CACHE_DATE=$(date +%Y-%m-%d:%H:%M:%S) -t mlesniak/budget-tracker . 
+	docker build --build-arg CACHE_DATE=$(shell date +%s) -t mlesniak/budget-tracker . 
 
 # For documentation and testing purposes.
 run:
