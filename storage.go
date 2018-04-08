@@ -33,7 +33,11 @@ func InitalizeStorage(fileName string) {
 func executeFile(fileName string) {
 	bytes, err := ioutil.ReadFile(fileName)
 	if err != nil {
-		log.Fatal("No initialization file found:", fileName)
+		bytes, err = Asset(fileName)
+		if err != nil {
+			log.Panic("Unable to find init file anywhere: fileName=" + fileName)
+		}
+		fileName = "asset:" + fileName
 	}
 	log.Println("Executing init script", fileName)
 
