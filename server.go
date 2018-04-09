@@ -7,6 +7,7 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"mime"
 
 	"github.com/gorilla/mux"
 )
@@ -60,6 +61,17 @@ func fileHandler(w http.ResponseWriter, r *http.Request) {
 		log.Println("File not found", upath)
 		w.WriteHeader(http.StatusNotFound)
 		return
+	}
+
+	// Handle Content-Type: Header
+	nameParts := strings.Split(upath, ".")
+	ext := ""
+	if len(nameParts) > 0 {
+		ext = nameParts[len(nameParts) - 1]
+	}
+	contentType := mime.TypeByExtension("." + ext)
+	if contentType != "" {
+		w.Header().Add("Content-Type", contentType)
 	}
 
 	w.Write(bytes)

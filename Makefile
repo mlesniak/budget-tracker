@@ -1,4 +1,6 @@
-all: pack docker
+all:  build docker
+
+build: pack
 	go build ./...
 
 pack:
