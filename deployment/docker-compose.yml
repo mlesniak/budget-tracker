@@ -1,0 +1,19 @@
+version: '3'
+services:
+  nginx:
+    image: budget/nginx
+    ports:
+     - 80:80
+  
+  # Add volumes!
+  michael:
+    environment:
+        # Demo password
+      - BUDGET_PASSWORD=foo
+    image: budget/core
+
+  sarah:
+    image: budget/core
+    environment:
+        # Demo password
+      - BUDGET_PASSWORD=zera
