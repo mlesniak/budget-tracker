@@ -7,6 +7,6 @@ popd
 
 pushd .
 cd application
-docker build -t budget/core .
+docker build --build-arg CACHE_DATE=$(date +%s) -t budget/core .
 popd
 
