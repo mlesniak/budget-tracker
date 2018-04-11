@@ -8,8 +8,9 @@ Vue.component('budget-display', {
         };
     },
     created: function() {
-        this.$on('update', function () {
-            this.fetchBudget();
+        var self = this;
+        app.$on('update', function () {
+            self.fetchBudget();
         });
         this.fetchBudget();
     },
@@ -64,8 +65,9 @@ Vue.component('transactions', {
         }
     },
     created: function() {
-        this.$on('update', function () {
-            this.fetchTransactions();
+        var self = this;
+        app.$on('update', function () {
+            self.fetchTransactions();
         });
         this.fetchTransactions();
     },
