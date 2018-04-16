@@ -5,10 +5,11 @@ import (
 	"os"
 )
 
-// TODO ML create generalized abstraction / library? for assets vs local storage for docker
-// TODO ML Favicon
-// TODO ML README
+// TODO ML Deployment script with update-on-server functionality
+// TODO ML README with build instructions
 // TODO ML r/golang posting
+// TODO ML Favicon on HomeScreen (https://en.wikipedia.org/wiki/Favicon#Browser_implementation)
+// TODO ML create generalized abstraction / library? for assets vs local storage for docker
 func main() {
 	databasePath := os.Getenv("BUDGET_DATABASE")
 	if databasePath == "" {
