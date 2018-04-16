@@ -25,8 +25,17 @@ I will be guided by the following principles
 - Be open to suggestions
 - Write idiomatic go code
 - Be pragmatic about testing, but try to test everything
-- Do not overengineer
+- Do not over-engineer
 
-# Project Organization
+# HTTPS Support
 
-The project is organized in with GitHub Issues and its corresponding project board.
+Since the cookie is (currently) submitted in plaintext, at least a HTTPS connection is mandatory. To
+generate the necessary server key, use
+
+    openssl genrsa -out server.key 2048
+
+To generate the corresponding certificate, use
+
+    openssl req -new -x509 -sha256 -key server.key -out server.crt -days 3650
+
+

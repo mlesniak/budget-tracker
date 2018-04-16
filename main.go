@@ -6,7 +6,6 @@ import (
 )
 
 // TODO ML create generalized abstraction / library? for assets vs local storage for docker
-// TODO ML HTTPS Support
 // TODO ML Favicon
 // TODO ML Decimal numbers in JS
 // TODO ML README

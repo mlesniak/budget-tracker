@@ -31,7 +31,12 @@ func StartServer(pw string) {
 	r.PathPrefix("/").HandlerFunc(fileHandler)
 	port := ":8080"
 	log.Println("Starting to listen on port", port)
-	http.ListenAndServe(port, r)
+	
+	// http.ListenAndServe(port, r)
+	err := http.ListenAndServeTLS(":" + port, "server.crt", "server.key", r)
+    if err != nil {
+        log.Fatal("Unable to start listening for connections ", err)
+    }
 }
 
 func fileHandler(w http.ResponseWriter, r *http.Request) {
