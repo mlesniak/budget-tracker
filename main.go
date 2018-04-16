@@ -1,10 +1,16 @@
 package main
 
 import (
+	"log"
 	"os"
-	"log")
+)
 
-// TODO ML create generalized abstraction for assets vs local storage for docker
+// TODO ML create generalized abstraction / library? for assets vs local storage for docker
+// TODO ML HTTPS Support
+// TODO ML Favicon
+// TODO ML Decimal numbers in JS
+// TODO ML README
+// TODO ML r/golang posting
 func main() {
 	databasePath := os.Getenv("BUDGET_DATABASE")
 	if databasePath == "" {
