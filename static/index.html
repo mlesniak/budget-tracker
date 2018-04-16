@@ -38,10 +38,10 @@
 <script type="text/x-template" id="budget">
     <div>
         <div class="daily">
-            {{daily}} EUR
+            {{daily | currency}} EUR
         </div>
         <div class="monthly">
-                {{balance}} EUR for {{remainingDays}} day(s)
+                {{balance | currency }} EUR for {{remainingDays}} day(s)
             </div>
     </div>
 </script>
@@ -63,7 +63,7 @@
                 <tr v-for="t, index in transactions">
                     <td class="text-left  col-xs-1">{{getFormattedDate(new Date(t.timestamp))}}</td>
                     <td class="text-left  col-xs-10">{{t.description}}</td>
-                    <td class="text-right col-xs-1">{{t.amount}}</td>
+                    <td class="text-right col-xs-1">{{t.amount | currency}}</td>
                 </tr>
             </tbody>
         </table>    

@@ -7,7 +7,7 @@ Vue.component('budget-display', {
             remainingDays: 0
         };
     },
-    created: function() {
+    created: function () {
         var self = this;
         app.$on('update', function () {
             self.fetchBudget();
@@ -40,7 +40,7 @@ var cookieComponent = Vue.component('cookie-input', {
         };
     }, methods: {
         submitCookie(e) {
-            // TODO ML Set secure and enforce https.
+            // TODO ML Set secure.
             this.createCookie("auth", this.secret, 365);
             app.$emit('update');
             this.$router.push("/");
@@ -64,7 +64,7 @@ Vue.component('transactions', {
             transactions: []
         }
     },
-    created: function() {
+    created: function () {
         var self = this;
         app.$on('update', function () {
             self.fetchTransactions();
@@ -161,7 +161,7 @@ var app = new Vue({
     data: {
         authenticated: false
     },
-    created: function() {
+    created: function () {
         this.$on('update', function () {
             this.checkAuthentification();
         });
@@ -171,13 +171,16 @@ var app = new Vue({
         checkAuthentification() {
             var self = this;
             axios.get('/api/authenticated')
-            .then(function (data) {
-                self.authenticated = true;
-            })
-            .catch(function (error) {
-                self.authenticated = false;
-            });
+                .then(function (data) {
+                    self.authenticated = true;
+                })
+                .catch(function (error) {
+                    self.authenticated = false;
+                });
         },
     }
 })
 
+Vue.filter('currency', function (value) {
+    return Number(value).toFixed(2);
+})
