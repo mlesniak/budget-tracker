@@ -3,19 +3,40 @@
 
 # Overview
 
-A budget tracker.
+A simple budget tracker to keep track of your incoming and outgoing expenses per month as well as statistics about your daily available 
+money. Besides a web-frontend which is also usable on a mobile device it provides a comfortable REST API for all your command-line magic.
 
 # Status
+
+All features that I need are implemented. Open an issue if you have the need for an additional feature, or
+even better, provide a pull request :-).
 
 In the following we show a screenshot of the current mobile user interface with
 fake data (i.e. everything is positive, no expenses, ...).
 
 ![Screenshot](current-status.png)
 
+# Build
+
+We use `make` to build, hence a 
+
+    make all
+
+should suffice. To generate docker images for two instances proxied by nginx, use
+
+    make docker
+
+to generate the docker images budget/nginx and budget/core. Adapt default.conf to provide
+more instances.
+
 # Technologies
+
+We use
 
 - Backend: Go(lang)
 - Frontend: Vuejs + Bootstrap
+
+Note that currently no particular frontend packaging system is used, e.g. nothing like webpack and co.
 
 # Guiding Principles
 
