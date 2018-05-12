@@ -18,3 +18,5 @@
 # Ignore certificates, have to be generated locally
 server.key
 server.crt
+
+budget-tracker
