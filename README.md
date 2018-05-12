@@ -18,6 +18,10 @@ fake data (i.e. everything is positive, no expenses, ...).
 
 # Build
 
+Note that you should clone this repository in your `$GOPATH/src/github.com/mlesniak/budget-tracker`. In addition, you should have installed go-bindata, e.g. using
+
+    go get -u github.com/jteeuwen/go-bindata/...
+
 We use `make` to build, hence a 
 
     make all

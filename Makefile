@@ -1,6 +1,7 @@
 all:  build docker
 
 build: pack
+	go get
 	go build ./...
 
 pack:

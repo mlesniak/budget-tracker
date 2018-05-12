@@ -87,7 +87,7 @@ func staticFaviconIco() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "static/favicon.ico", size: 32038, mode: os.FileMode(420), modTime: time.Unix(1523850962, 0)}
+	info := bindataFileInfo{name: "static/favicon.ico", size: 32038, mode: os.FileMode(420), modTime: time.Unix(1526139010, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -107,7 +107,7 @@ func staticIndexHtml() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "static/index.html", size: 4435, mode: os.FileMode(420), modTime: time.Unix(1523850542, 0)}
+	info := bindataFileInfo{name: "static/index.html", size: 4435, mode: os.FileMode(420), modTime: time.Unix(1526139010, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -127,7 +127,7 @@ func staticMainCss() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "static/main.css", size: 955, mode: os.FileMode(420), modTime: time.Unix(1522665229, 0)}
+	info := bindataFileInfo{name: "static/main.css", size: 955, mode: os.FileMode(420), modTime: time.Unix(1526139010, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -147,7 +147,7 @@ func staticMainJs() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "static/main.js", size: 5058, mode: os.FileMode(420), modTime: time.Unix(1523850701, 0)}
+	info := bindataFileInfo{name: "static/main.js", size: 5058, mode: os.FileMode(420), modTime: time.Unix(1526139010, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -167,7 +167,7 @@ func initSql() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "init.sql", size: 702, mode: os.FileMode(420), modTime: time.Unix(1521176180, 0)}
+	info := bindataFileInfo{name: "init.sql", size: 702, mode: os.FileMode(420), modTime: time.Unix(1526139010, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
