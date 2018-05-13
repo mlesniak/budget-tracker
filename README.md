@@ -64,3 +64,6 @@ To generate the corresponding certificate, use
     openssl req -new -x509 -sha256 -key server.key -out server.crt -days 3650
 
 
+## License
+
+The source code is licensed under the [Apache license](https://raw.githubusercontent.com/mlesniak/budget-tracker/master/LICENSE)
