@@ -29,7 +29,7 @@ func StartServer(pw string) {
 	r.HandleFunc("/api/transaction", requireAuthentication(postHandler)).
 		Methods("POST")
 	r.PathPrefix("/").HandlerFunc(fileHandler)
-	port := ":8080"
+	port := "8080"
 	log.Println("Starting to listen on port", port)
 	
 	// http.ListenAndServe(port, r)
